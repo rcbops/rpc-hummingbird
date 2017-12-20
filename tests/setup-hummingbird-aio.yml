@@ -1,0 +1,9 @@
+---
+
+- include: setup-containers.yml
+
+- include: setup-hummingbird-storage.yml
+
+
+# - include: ../playbooks/deploy-hummingbird.yml
+
