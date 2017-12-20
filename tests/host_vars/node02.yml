@@ -7,9 +7,3 @@ container_networks:
     interface: "eth1"
     netmask: "255.255.255.0"
     type: "veth"
-  storage_address:
-    address: "{{ hummingbird_storage_address }}"
-    bridge: "br-storage"
-    interface: "eth2"
-    netmask: "255.255.255.0"
-    type: "veth"

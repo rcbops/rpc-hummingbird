@@ -38,13 +38,13 @@
     - name: Shut down the network interfaces
       command: "ifdown {{ item.name | default('br-mgmt') }}"
       when:
-        - (network_interfaces_deb | changed)
+        - network_interfaces_deb | changed
       with_items: "{{ bridges }}"
 
     - name: Start the network interfaces
       command: "ifup {{ item.name | default('br-mgmt') }}"
       when:
-        - (network_interfaces_deb | changed)
+        - network_interfaces_deb | changed
       with_items: "{{ bridges }}"
 
     - name: Determine iptables path
