@@ -62,7 +62,7 @@ if [ "${FUNCTIONAL_TEST}" = true ]; then
                      -e role_file=../ansible-role-test-requirements.yml
   popd
 
-  ansible-playbook -i tests/inventory tests/setup-ceph-aio.yml -e @tests/test-vars.yml
+  ansible-playbook -i tests/inventory tests/setup-hummingbird-aio.yml -e @tests/test-vars.yml
   # Use the rpc-maas deploy to test MaaS
   if [ "${IRR_CONTEXT}" != "ceph" ]; then
     pushd ${RPC_MAAS_DIR}

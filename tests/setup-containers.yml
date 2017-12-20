@@ -86,46 +86,16 @@
       tags:
         - networking-interfaces-load
 
-    - name: Ensure the postup/postdown scripts are loaded (RedHat)
-      lineinfile:
-        dest: "/etc/sysconfig/network-scripts/{{ item[0] }}"
-        line: ". /etc/sysconfig/network-scripts/{{ item[0] }}-veth-{{ item[1].name | default('br-mgmt') }}-2-{{ item[1].veth_peer | default('eth1') }}"
-        insertbefore: "^exit 0"
-      with_nested:
-        - [ "ifup-post", "ifdown-post" ]
-        - "{{ bridges }}"
-      when:
-        - item[1].veth_peer is defined
-        - ansible_pkg_mgr in ['yum', 'dnf']
-
     - name: Shut down the network interfaces
       command: "ifdown {{ item.name | default('br-mgmt') }}"
       when:
-        - (network_interfaces_rhel | changed) or (network_interfaces_deb | changed) or
-          (network_interfaces_suse | changed)
-      with_items: "{{ bridges }}"
-
-    - name: Shut down the alias interface (RedHat)
-      command: "ifdown {{ item.name | default('br-mgmt') }}:0"
-      when:
-        - ansible_pkg_mgr in ['yum', 'dnf']
-        - network_interfaces_rhel | changed
-        - item.alias is defined
+        - (network_interfaces_deb | changed)
       with_items: "{{ bridges }}"
 
     - name: Start the network interfaces
       command: "ifup {{ item.name | default('br-mgmt') }}"
       when:
-        - (network_interfaces_rhel | changed) or (network_interfaces_deb | changed) or
-          (network_interfaces_suse | changed)
-      with_items: "{{ bridges }}"
-
-    - name: Start the alias interface (RedHat)
-      command: "ifup {{ item.name | default('br-mgmt') }}:0"
-      when:
-        - ansible_pkg_mgr in ['yum', 'dnf']
-        - network_interfaces_rhel | changed
-        - item.alias is defined
+        - (network_interfaces_deb | changed)
       with_items: "{{ bridges }}"
 
     - name: Determine iptables path
