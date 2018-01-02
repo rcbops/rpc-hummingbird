@@ -4,6 +4,5 @@
 
 - include: setup-hummingbird-storage.yml
 
-
-# - include: ../playbooks/deploy-hummingbird.yml
+- include: ../playbooks/deploy-hummingbird.yml
 

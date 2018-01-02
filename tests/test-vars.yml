@@ -12,8 +12,6 @@ ansible_user: root
 bridges:
   - name: "br-mgmt"
     ip_addr: "{{ ansible_addr_prefix }}.1"
-  - name: "br-storage"
-    ip_addr: "{{ storage_addr_prefix }}.1"
 
 
 ## LXC container default bind mounts
@@ -50,7 +48,7 @@ ansible_ssh_extra_args: >
   -o ForwardX11=no
   -o ForwardAgent=yes
   -T
-# Used to create the device mappings into the containers - not Ceph specific
+# Used to create the device mappings into the containers - not Hummingbird specific
 device_mapping:
   - /dev/sda
   - /dev/sdb
@@ -69,5 +67,5 @@ maas_restart_independent: false
 maas_notification_plan: npTechnicalContactsEmail
 # Set the MaaS entity to be ansible_hostname instead of inventory_hostname
 maas_entity_name: "{{ ansible_hostname }}{{ maas_fqdn_extension }}"
-# Allow ceph services to be inside containers.
-maas_rpc_legacy_ceph: True
+# Allow hummingbird services to be inside containers.
+maas_rpc_legacy_hummingbird: True

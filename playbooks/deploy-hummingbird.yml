@@ -24,32 +24,27 @@
       when:
         - systempython2.stat.exists is undefined or systempython2.stat.exists == false
 
-    - name: install python2 for fedora
-      raw: sudo dnf -y install python creates=/usr/bin/python
-      ignore_errors: yes
-      when:
-        - systempython2.stat.exists is undefined or systempython2.stat.exists == false
-
     - name: gather and delegate facts
       setup:
       delegate_to: "{{ item }}"
       delegate_facts: True
       with_items: "{{ groups['all'] }}"
 
-    - name: install required packages for fedora > 23
-      raw: sudo dnf -y install python2-dnf libselinux-python ntp
-      when:
-        - ansible_distribution == 'Fedora'
-        - ansible_distribution_major_version|int >= 23
-
+# This will create a simple Hummingbird AIO on 1 node, using one device, and a ring with 1 replica
 - hosts: hummingbird
-  gather_facts: false
-  become: True
+  become: yes
   roles:
-    - ceph-defaults
-    - ceph-common
-    - ceph-config
-    - ceph-mon
+    - { role: common, tags: ['common'] }
+    - { role: storage, tags: ['storage'] }
+    - { role: aio, tags: ['aio'] }
+    - { role: proxy-server, tags: ['proxy-server'] }
+    - { role: account-server, tags: ['account-server'] }
+    - { role: container-server, tags: ['container-server'] }
+    - { role: object-server, tags: ['object-server'] }
+
+
+
 
 # Setup logging to centralized rsyslog server
-- include: hummingbird-setup-logging.yml
+#- include: hummingbird-setup-logging.yml
+
