@@ -55,7 +55,7 @@ device_mapping:
   - /dev/sdc
 
 ## Testing specific hummingbird vars
-rpc_hummingbird_test_drive_size: 5
+rpc_hummingbird_test_drive_size: 5G
 
 
 ### MaaS settings

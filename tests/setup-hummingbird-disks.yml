@@ -1,3 +1,14 @@
+---
+
+- name: Setup some localhost bits for MaaS testing
+  hosts: localhost
+  become: true
+  tasks:
+  - name: Setup directories
+    file:
+      state: directory
+      path: "/etc/hummingbird"
+
 - name: Hummingbird Disk Setup
   hosts: hummingbird
   user: root
@@ -29,7 +40,7 @@
       - 'drive3'
 
   - name: Create small hummingbird files
-    command: "truncate -s 5120G /opt/{{container_name}}_{{ item }}.img"
+    command: "truncate -s {{rpc_hummingbird_test_drive_size}} /opt/{{container_name}}_{{ item }}.img"
     args:
       creates: "/opt/{{ container_name}}_{{ item }}.img"
     with_items:
@@ -44,7 +55,7 @@
       fstype: xfs
       opts: '-K'
       dev: "/opt/{{ container_name}}_{{ item }}.img"
-    when: swift_create | changed
+    when: hummingbird_create | changed
     with_items:
       - 'drive1'
       - 'drive2'
