@@ -12,6 +12,9 @@ node01
 node02
 node03
 
+[hummingbird_admin]
+localhost
+
 [hummingbird]
 node01          service_ip=10.1.1.101
 node02          service_ip=10.1.1.102
