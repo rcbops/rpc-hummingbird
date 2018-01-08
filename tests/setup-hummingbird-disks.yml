@@ -34,6 +34,8 @@
     file:
       state: directory
       path: "/srv/node/{{ item }}"
+      owner: hummingbird
+      group: hummingbird
     with_items:
       - 'sda'
       - 'sdb'

@@ -13,7 +13,7 @@ node02
 node03
 
 [hummingbird_admin]
-localhost
+localhost	service_ip=127.0.0.1
 
 [hummingbird]
 node01          service_ip=10.1.1.101

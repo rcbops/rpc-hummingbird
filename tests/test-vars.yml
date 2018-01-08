@@ -57,7 +57,7 @@ device_mapping:
 ## Testing specific hummingbird vars
 rpc_hummingbird_test_drive_size: 5G
 proxy_port: 8080
-sh_prefix: changeme
+hash_prefix: changeme
 hash_suffix: changeme
 use_temp_auth: true
 filebeat_logstash_hosts:

@@ -55,6 +55,7 @@ if [ "${FUNCTIONAL_TEST}" = true ]; then
   export ANSIBLE_OVERRIDES="${CLONE_DIR}/tests/test-vars.yml"
   export ANSIBLE_BINARY="ansible-playbook"
   bash scripts/bootstrap-ansible.sh
+  bash scripts/set-static-rings.sh
   # Clone the test repos
   pushd playbooks
     ansible-playbook git-clone-repos.yml \
