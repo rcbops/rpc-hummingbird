@@ -34,21 +34,19 @@
     file:
       state: directory
       path: "/srv/node/{{ item }}"
-      owner: hummingbird
-      group: hummingbird
     with_items:
-      - 'sda'
-      - 'sdb'
-      - 'sdc'
+      - 'sda1'
+      - 'sdb1'
+      - 'sdc1'
 
   - name: Create small hummingbird files
     command: "truncate -s {{rpc_hummingbird_test_drive_size}} /opt/{{container_name}}_{{ item }}.img"
     args:
       creates: "/opt/{{ container_name}}_{{ item }}.img"
     with_items:
-      - 'sda'
-      - 'sdb'
-      - 'sdc'
+      - 'sda1'
+      - 'sdb1'
+      - 'sdc1'
     register: hummingbird_create
     delegate_to: "{{ physical_host }}"
 
@@ -59,9 +57,9 @@
       dev: "/opt/{{ container_name}}_{{ item }}.img"
     when: hummingbird_create | changed
     with_items:
-      - 'sda'
-      - 'sdb'
-      - 'sdc'
+      - 'sda1'
+      - 'sdb1'
+      - 'sdc1'
     delegate_to: "{{ physical_host }}"
 
   - name: Create the hummingbird fstab entries and mount the file systems
@@ -74,9 +72,9 @@
       dump: 0
       state: mounted
     with_items:
-      - 'sda'
-      - 'sdb'
-      - 'sdc'
+      - 'sda1'
+      - 'sdb1'
+      - 'sdc1'
     register: mount_status
     until: mount_status | success
     retries: 5

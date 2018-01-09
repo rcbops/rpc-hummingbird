@@ -55,6 +55,7 @@ device_mapping:
   - /dev/sdc
 
 ## Testing specific hummingbird vars
+setup_storage: False
 rpc_hummingbird_test_drive_size: 5G
 proxy_port: 8080
 hash_prefix: changeme
