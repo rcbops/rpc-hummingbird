@@ -40,6 +40,7 @@
   become: yes
   roles:
     - { role: common, tags: ['common'] }
+    - { role: storage, tags: ['storage'] }
     - { role: ring, tags: ['ring'] }
     - { role: proxy-server, tags: ['proxy-server'] }
     - { role: account-server, tags: ['account-server'] }
