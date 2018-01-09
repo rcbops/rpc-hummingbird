@@ -85,9 +85,9 @@
     lxc_container:
       name: "{{ container_name }}"
       container_config:
-        - "lxc.mount.entry=/srv/{{ container_name }}_sda srv/node/sda none bind 0 0"
-        - "lxc.mount.entry=/srv/{{ container_name }}_sdb srv/node/sdb none bind 0 0"
-        - "lxc.mount.entry=/srv/{{ container_name }}_sdc srv/node/sdc none bind 0 0"
+        - "lxc.mount.entry=/srv/{{ container_name }}_sda1 srv/node/sda1 none bind 0 0"
+        - "lxc.mount.entry=/srv/{{ container_name }}_sdb1 srv/node/sdb1 none bind 0 0"
+        - "lxc.mount.entry=/srv/{{ container_name }}_sdc1 srv/node/sdc1 none bind 0 0"
     delegate_to: "{{ physical_host }}"
 
   - name: Wait for container connectivity
