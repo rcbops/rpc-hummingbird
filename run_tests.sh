@@ -29,10 +29,6 @@ if which apt-get; then
     sudo apt-get update && sudo apt-get install -y python
 fi
 
-if which yum; then
-    sudo yum install -y python
-fi
-
 # Install pip.
 if ! which pip; then
   curl --silent --show-error --retry 5 \
@@ -41,13 +37,6 @@ fi
 
 # Install bindep and tox with pip.
 sudo pip install bindep tox
-
-# CentOS 7 requires two additional packages:
-#   redhat-lsb-core - for bindep profile support
-#   epel-release    - required to install python-ndg_httpsclient/python2-pyasn1
-if which yum; then
-    sudo yum -y install redhat-lsb-core epel-release
-fi
 
 if [ "${FUNCTIONAL_TEST}" = true ]; then
   export CLONE_DIR="$(pwd)"
@@ -65,7 +54,7 @@ if [ "${FUNCTIONAL_TEST}" = true ]; then
 
   ansible-playbook -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
   # Use the rpc-maas deploy to test MaaS
-  if [ "${IRR_CONTEXT}" != "ceph" ]; then
+  if [ "${IRR_CONTEXT}" != "hummingbird" ]; then
     pushd ${RPC_MAAS_DIR}
       bash tests/test-ansible-functional.sh
     popd
