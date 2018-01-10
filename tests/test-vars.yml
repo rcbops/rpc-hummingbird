@@ -48,11 +48,6 @@ ansible_ssh_extra_args: >
   -o ForwardX11=no
   -o ForwardAgent=yes
   -T
-# Used to create the device mappings into the containers - not Hummingbird specific
-device_mapping:
-  - /dev/sda
-  - /dev/sdb
-  - /dev/sdc
 
 ## Testing specific hummingbird vars
 storage_devs:
