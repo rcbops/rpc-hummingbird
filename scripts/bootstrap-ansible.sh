@@ -83,7 +83,7 @@ fi
 virtualenv --python=${PYTHON_EXEC_PATH} \
            --clear \
            --no-pip --no-setuptools --no-wheel \
-           /opt/ansible-runtime
+           /opt/rpc-hummingbird-ansible-runtime
 
 # Install pip, setuptools and wheel into the venv
 get_pip /opt/rpc-hummingbird-ansible-runtime/bin/python
