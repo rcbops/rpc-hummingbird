@@ -1,50 +1,47 @@
-i# rpc-ceph and ceph-ansible
+# rpc-hummingbird and hansible(ansible bits used to install hummingbird)
 
-``rpc-ceph`` deploys Ceph as an RPC stand-alone platform in a uniform,
+``rpc-hummingbird`` deploys Hummingbird as an RPC stand-alone platform in a uniform,
 managed, and tested way to ensure version consistency and testing.
 
-By adding automated tests, ``rpc-ceph`` provides a way to manage tested
-versions of ``ceph-ansible`` used in RPC deployments.
+By adding automated tests, ``rpc-hummingbird`` provides a way to manage tested
+versions of ``hansible`` used in RPC deployments.
 
-## What is rpc-ceph?
+## What is rpc-hummingbird?
 
-``rpc-ceph`` is a thin wrapper around the ``ceph-ansible`` project.
-``rpc-ceph`` manages the versions of ansible and ``ceph-ansible``
+``rpc-hummingbird`` is a thin wrapper around the ``hansible`` repo.
+``rpc-hummingbird`` manages the versions of ansible and ``hansible``
 by providing:
 
  * RPC integration testing (MaaS/Logging and WIP-OpenStack).
- * Tested and versioned ``ceph-ansible`` and Ceph releases.
+ * Tested and versioned ``hansible`` and hummingbird releases.
  * Default variables (still WIP) for base installs.
  * Standarized deployments.
  * Default playbooks for integration.
- * Benchmarking tools using ``fio``.
+ * Benchmarking tools using ``hummingbird bench``.
 
-Deploying ``rpc-ceph`` uses ``boostrap.sh``, ``ceph-ansible``, default
+Deploying ``rpc-hummingbird`` uses ``boostrap.sh``, ``hansible``, default
 ``group_vars``, and a pre-created playbook.
 
-**NOTE:** Anything that can be configured with ``ceph-ansible`` is configurable with
-``rpc-ceph``.
+**NOTE:** Anything that can be configured with ``hansible`` is configurable with
+``rpc-hummingbird``.
 
 
-## Deploying Ceph for multi-node and production environments
+## Deploying Hummingbired for multi-node and production environments
 
 ### Architecture
 
-We do not recommend or use containers for ``rpc-ceph`` production deployments.
+We do not recommend or use containers for ``rpc-hummingbired`` production deployments.
 Containers are setup and used as part of the ``run_tests.sh`` (AIO) testing
 strategy only. The default playbooks are not set up to build containers or
 configure any of the required container specific roles.
 
 The inventory should consist of the following:
 
- * 1-3+ mons hosts (perferably 3 or more), and an uneven number of them.
- * 1-3+ mgrs hosts (perferably 3 or more) - Ideally on the mon hosts
-   (Since the Luminous release this is required).
- * 3+ osds hosts with storage drives.
- * OPTIONAL: 1-3+ rgws hosts - these will be load balanced.
+ * 1 admin node used for andrewd, ring work and a staging area.
+ * storage nodes used to run the conponents of hummingbird
+ * ``hummingbird`` hosts, pointing to the storage nodes
+ * ``monitoring`` host, pointing at the monitoring node
  * ``rsyslog_all`` host, pointing to the existing rsyslog logging server.
- * OPTIONAL:``benchmark_hosts`` - the host on which to run benchmarking
-   (Read ``benchmark/README.md`` for more).
 
 ### Configuring your deployment host
 
@@ -76,7 +73,7 @@ The inventory should consist of the following:
 5. Run the ``hansible`` playbook from the playbooks directory:
 
    ```bash
-   /opt/hansible-runtime/bin/ansible-playbook -i <link to your inventory file> playbooks/deploy-ceph.yml -e @<link to your vars file>
+   /opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook -i <link to your inventory file> playbooks/deploy-ceph.yml -e @<link to your vars file>
    ```
 
 Your deployment should be successful.
