@@ -5,7 +5,7 @@ node02
 node03
 
 [hosts]
-localhost
+localhost	ansible_connection=local
 
 [all_containers]
 node01
