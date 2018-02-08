@@ -18,13 +18,11 @@ set -xeuo pipefail
 echo "Gate job started"
 echo "+-------------------- START ENV VARS --------------------+"
 env
-echo "+-------------------- START ENV VARS --------------------+"
+echo "+-------------------- END ENV VARS --------------------+"
 
-export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/etc/ansible/roles/rpc-maas}
-export RE_JOB_BRANCH=${RE_JOB_BRANCH:-"master"}
 export RE_JOB_SCENARIO=${RE_JOB_SCENARIO:-"functional"}
-# NOTE(mattt): This is a legacy variable which is still used by rpc-maas
-export IRR_CONTEXT=${RE_JOB_BRANCH}
+export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/etc/ansible/roles/rpc-maas}
+export TEST_RPC_MAAS=${TEST_RPC_MAAS:-True}
 
 # Install python2 for Ubuntu 16.04 and CentOS 7
 if which apt-get; then
@@ -56,8 +54,9 @@ if [ "${RE_JOB_SCENARIO}" = "functional" ]; then
 
   ${ANSIBLE_BINARY} -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
   # Use the rpc-maas deploy to test MaaS
-  if [ "${IRR_CONTEXT}" != "hummingbird" ]; then
+  if [ "${TEST_RPC_MAAS}" != "False" ]; then
     pushd ${RPC_MAAS_DIR}
+      export RE_JOB_SCENARIO="hummingbird"
       bash tests/test-ansible-functional.sh
     popd
   fi

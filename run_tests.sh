@@ -18,11 +18,11 @@ set -xeuo pipefail
 echo "Gate job started"
 echo "+-------------------- START ENV VARS --------------------+"
 env
-echo "+-------------------- START ENV VARS --------------------+"
+echo "+-------------------- END ENV VARS --------------------+"
 
-export FUNCTIONAL_TEST=${FUNCTIONAL_TEST:-true}
+export RE_JOB_SCENARIO=${RE_JOB_SCENARIO:-"functional"}
 export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/etc/ansible/roles/rpc-maas}
-export IRR_CONTEXT=${IRR_CONTEXT:-"undefined"}
+export TEST_RPC_MAAS=${TEST_RPC_MAAS:-True}
 
 # Install python2 for Ubuntu 16.04 and CentOS 7
 if which apt-get; then
@@ -38,7 +38,7 @@ fi
 # Install bindep and tox with pip.
 sudo pip install bindep tox
 
-if [ "${FUNCTIONAL_TEST}" = true ]; then
+if [ "${RE_JOB_SCENARIO}" = "functional" ]; then
   export CLONE_DIR="$(pwd)"
   export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory"
   export ANSIBLE_OVERRIDES="${CLONE_DIR}/tests/test-vars.yml"
@@ -54,8 +54,9 @@ if [ "${FUNCTIONAL_TEST}" = true ]; then
 
   ${ANSIBLE_BINARY} -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
   # Use the rpc-maas deploy to test MaaS
-  if [ "${IRR_CONTEXT}" != "hummingbird" ]; then
+  if [ "${TEST_RPC_MAAS}" != "False" ]; then
     pushd ${RPC_MAAS_DIR}
+      export RE_JOB_SCENARIO="hummingbird"
       bash tests/test-ansible-functional.sh
     popd
   fi

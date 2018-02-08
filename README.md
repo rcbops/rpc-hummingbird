@@ -73,7 +73,7 @@ The inventory should consist of the following:
 5. Run the ``hansible`` playbook from the playbooks directory:
 
    ```bash
-   /opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook -i <link to your inventory file> playbooks/deploy-ceph.yml -e @<link to your vars file>
+   /opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook -i <link to your inventory file> playbooks/deploy-hummingbird.yml -e @<link to your vars file>
    ```
 
 Your deployment should be successful.
@@ -95,7 +95,6 @@ Otherwise just use ``./run_tests.sh`` to build the AIO.
 ```bash
 export PUBCLOUD_USERNAME=<username>
 export PUBCLOUD_API_KEY=<api_key>
-export IRR_CONTEXT=master
 ```
 
 ### Tested builds as AIO
