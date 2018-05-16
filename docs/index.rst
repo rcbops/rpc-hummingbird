@@ -5,7 +5,6 @@
 
 Welcome to Hummingbird's documentation!
 =======================================
-Small doc change to test travis.
 
 .. toctree::
    :maxdepth: 2
