@@ -18,7 +18,7 @@
   vars_files:
     - test-vars.yml
   tasks:
-  - name: Ensure xfsprogs is installed on localhost
+  - name: random change to ensure gate is working now
     package:
       name: xfsprogs
       state: present
