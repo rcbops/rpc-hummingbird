@@ -57,6 +57,9 @@ if [ "${RE_JOB_SCENARIO}" = "functional" ]; then
   if [ "${TEST_RPC_MAAS}" != "False" ]; then
     pushd ${RPC_MAAS_DIR}
       export RE_JOB_SCENARIO="hummingbird"
+      ## This is needed for the maas job to be able to update the apt cache
+      ## When the influxdb repo is present.
+      apt-get install -y apt-transport-https
       bash tests/test-ansible-functional.sh
     popd
   fi
