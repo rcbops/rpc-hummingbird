@@ -37,10 +37,38 @@ Supported Hardware
 Rackspace Data Center
 ------------------------
 
-- HPE 4510-G10
-- HPE DL380-G9
-- Supermicro E16/E26 JBOD
-- Dell R740XL-XL
+**HPE 4510-G10**
+-Capacity: 450TB RAW per Node
+-Model: HP DL380 Gen9 LFF - 3.5" Chassis
+-Processor: Dual Socket Intel Xeon Processor 6142 (16 Core 2.6GHz)
+-Memory: 192 GB
+-Onboard NIC: HPE Eth 10/25Gb 2P 640FLR-SFP28 NIC (MLNX-CX4)
+-Additional NIC: HPE Eth 10/25Gb 2P 640-SFP28 NIC (MLNX-CX4)
+-RAID Controllers: 1x HPE Smart Array E208i-a SR, 2x HPE Smart Array P408i-p SR
+-Drives: 2x 960 GB SSD(OS), 10x 1.92TB SSD (MU), 50x 10TB NL-SAS/SATA
+
+**HPE DL380-G9**
+-Capacity: 37TB RAW per Node
+-Model: HP DL380 Gen9 LFF - 3.5" Chassis
+-Processor: Dual Socket Octo Core Intel Xeon E5-2630 2.40 Ghz
+-Memory: 128 GB
+-Onboard NIC: HP 561-T Dual Port 10GbE Base-T PCIe NIC (RJ-45)
+-Additional NIC: HP 561-T Dual Port 10GbE Base-T PCIe NIC (RJ-45)
+-Drives: 2x 600 GB SAS(OS), 2x 960GB SSD (MU), 8x 6TB NL-SAS/SATA
+
+**Supermicro E16/E26 JBOD**
+-45x SATA Drives
+
+**Dell R740XL-XL**
+-Capacity: xxTB RAW per Node
+-Model: HP DL380 Gen9 LFF - 3.5" Chassis
+-Processor: Dual Socket Intel Xeon Processor 4110 (8 Core 2.1 GHz)
+-Memory: 192 GB
+-Onboard NIC: Intel X550 4-port 10GbE Base-T (RJ-45)
+-Additional NIC: Intel X550 2-port 10GbE Base-T (RJ-45)
+-Drives: 2x 460 GB SSD(OS), 2x 960GB SSD (MU), 10x 8TB NL-SAS/SATA
+
+**Networking**
 - F5 Loadbalancer
 - HAProxy
 - 10GbE Networking
@@ -52,6 +80,7 @@ Customer Data Center
 - HPE DL380-G9
 - Supermicro E16/E26 JBOD
 - Dell R740XL-XL 
+- Others on request
 - F5 Loadbalancer
 - HAProxy 
 - 10/25/40/50GbE Networking
