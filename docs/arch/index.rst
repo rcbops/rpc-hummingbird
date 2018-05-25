@@ -34,8 +34,8 @@ No support for Swift's Symbolic Linking feature at this time.
 Supported Hardware - Rackspace Data Center
 ========================
 
-- HPE 4510G10
-- HPE DL380G9
+- HPE 4510-G10
+- HPE DL380-G9
 - Supermicro E16/E26 JBOD
 - Dell R740XL-XL
 - F5 Loadbalancer
@@ -46,19 +46,33 @@ Supported Hardware - Rackspace Data Center
 Supported Hardware - Customer Data Center
 ========================
 
-- HPE 4510G10
-- HPE DL380G9
+- HPE 4510-G10
+- HPE DL380-G9
 - Supermicro E16/E26 JBOD
 - Dell R740XL-XL 
 - F5 Loadbalancer
 - HAProxy 
 - 10/25/40/50GbE Networking
 
+- A customer must adhere to certain guidelines when procuring or re-purposing existing hardware.  A Hummingbird cluster made from non-ideal, or inconsistent hardware will lead to a poor user experience.
+
+Generally the following recommendations should be followed when not using the node deisgns detailed above.
+
+- CPUs - 1 CPU Core to 2 Object Disks, CPUs should be no older than Haswell
+- RAM per Object Storage Disk - A minimum allocation of 2GB RAM
+- SSD to Object Storage Ratio - Recommend that SSD capacity is approximately 4% of total Object storage
+- Journal Disk Endurance - Journal disks are required to be NVMe/SSD with a duty cycle of a minimum of 5TBWPD.
+- Object Storage Drives - NVMe, SSD, SAS, NL-SAS or SATA supported
+- Operating System Drives - Must be a RAID1 pair of minimum SAS drives
+- Networking - No less than 2x 10GbE or 2x 25GbE or 2x 40GbE Ports per node.  Jumbo frames highly recommended. Care must be taken to size TOR uplinks to aggregation switches to avoid creating a bottleneck.
+
 ========================
 Supported Deployments
 ========================
 
-- A minimal number of nodes equal to the number of replicas is required, growth increments are then in increments of that same number.
+- A minimal number of nodes equal to the number of replicas or number of EC shards is required, growth increments are then in increments of that same number.
+- All storage nodes must have HA networking
+- All cabinets must provide HA networking
 
 For example, a 3-Replica cluster could start with nodes 1,9,17 below, scaling up to 24 nodes, before scaling out to another 3 cabinets for nodes 25 through 48.
 
