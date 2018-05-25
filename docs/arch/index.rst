@@ -30,3 +30,31 @@ No support for Swift's Symbolic Linking feature at this time.
 
 .. image:: hummingbird_architecture.png
 
+========================
+Supported Hardware - Rackspace Data Center
+========================
+
+HPE 4510G10
+HPE DL380G9
+Supermicro E16/E26 JBOD
+Dell R740XL-XL
+F5 Loadbalancer
+HAProxy
+
+========================
+Supported Hardware - Customer Data Center
+========================
+
+HPE 4510G10
+HPE DL380G9
+Supermicro E16/E26 JBOD
+Dell R740XL-XL
+F5 Loadbalancer
+HAProxy
+
+========================
+Supported Deployments
+========================
+
+A minimal number of nodes equal to the number of replicas is required, growth increments are then in increments of that same number.
+
