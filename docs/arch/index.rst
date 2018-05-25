@@ -60,4 +60,7 @@ Supported Deployments
 
 - A minimal number of nodes equal to the number of replicas is required, growth increments are then in increments of that same number.
 
+For example, a 3-Replica cluster could start with nodes 1,9,17 below, scaling up to 24 nodes, before scaling out to another 3 cabinets for nodes 25 through 48.
+
+.. image:: hpesmjbodracks.png
 
