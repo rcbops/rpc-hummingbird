@@ -31,8 +31,11 @@ No support for Swift's Symbolic Linking feature at this time.
 .. image:: hummingbird_architecture.png
 
 ========================
-Supported Hardware - Rackspace Data Center
+Supported Hardware
 ========================
+
+Rackspace Data Center
+------------------------
 
 - HPE 4510-G10
 - HPE DL380-G9
@@ -42,9 +45,8 @@ Supported Hardware - Rackspace Data Center
 - HAProxy
 - 10GbE Networking
 
-========================
-Supported Hardware - Customer Data Center
-========================
+Customer Data Center
+------------------------
 
 - HPE 4510-G10
 - HPE DL380-G9
@@ -54,9 +56,9 @@ Supported Hardware - Customer Data Center
 - HAProxy 
 - 10/25/40/50GbE Networking
 
-- A customer must adhere to certain guidelines when procuring or re-purposing existing hardware.  A Hummingbird cluster made from non-ideal, or inconsistent hardware will lead to a poor user experience.
+**A customer must adhere to certain guidelines when procuring or re-purposing existing hardware.  A Hummingbird cluster made from non-ideal, or inconsistent hardware will lead to a poor user experience.**
 
-Generally the following recommendations should be followed when not using the node deisgns detailed above.
+*Generally the following recommendations should be followed when not using the node configurations detailed above.*
 
 - CPUs - 1 CPU Core to 2 Object Disks, CPUs should be no older than Haswell
 - RAM per Object Storage Disk - A minimum allocation of 2GB RAM
@@ -66,9 +68,9 @@ Generally the following recommendations should be followed when not using the no
 - Operating System Drives - Must be a RAID1 pair of minimum SAS drives
 - Networking - No less than 2x 10GbE or 2x 25GbE or 2x 40GbE Ports per node.  Jumbo frames highly recommended. Care must be taken to size TOR uplinks to aggregation switches to avoid creating a bottleneck.
 
-========================
+
 Supported Deployments
-========================
+------------------------
 
 - A minimal number of nodes equal to the number of replicas or number of EC shards is required, growth increments are then in increments of that same number.
 - All storage nodes must have HA networking
