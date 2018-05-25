@@ -34,27 +34,30 @@ No support for Swift's Symbolic Linking feature at this time.
 Supported Hardware - Rackspace Data Center
 ========================
 
-HPE 4510G10
-HPE DL380G9
-Supermicro E16/E26 JBOD
-Dell R740XL-XL
-F5 Loadbalancer
-HAProxy
+- HPE 4510G10
+- HPE DL380G9
+- Supermicro E16/E26 JBOD
+- Dell R740XL-XL
+- F5 Loadbalancer
+- HAProxy
+- 10GbE Networking
 
 ========================
 Supported Hardware - Customer Data Center
 ========================
 
-HPE 4510G10
-HPE DL380G9
-Supermicro E16/E26 JBOD
-Dell R740XL-XL
-F5 Loadbalancer
-HAProxy
+- HPE 4510G10
+- HPE DL380G9
+- Supermicro E16/E26 JBOD
+- Dell R740XL-XL 
+- F5 Loadbalancer
+- HAProxy 
+- 10/25/40/50GbE Networking
 
 ========================
 Supported Deployments
 ========================
 
-A minimal number of nodes equal to the number of replicas is required, growth increments are then in increments of that same number.
+- A minimal number of nodes equal to the number of replicas is required, growth increments are then in increments of that same number.
+
 
