@@ -39,7 +39,7 @@ Rackspace Data Center
 
 **HPE 4510-G10 (Currently Considered a One-Off)**
 
-- **Capacity:** 453TB RAW per Node
+- **Capacity:** 454TB RAW per Node
 - **Model:** HP DL380 Gen9 LFF - 3.5" Chassis
 - **Processor:** Dual Socket Intel Xeon Processor 6142 (16 Core 2.6GHz)
 - **Memory:** 192 GB
@@ -65,7 +65,7 @@ Rackspace Data Center
 
 **Dell R740XL-XL**
 
-- **Capacity:** xxTB RAW per Node
+- **Capacity:** 72TB RAW per Node
 - **Model:** Dell R740XD-XL - 3.5" Chassis
 - **Processor:** Dual Socket Intel Xeon Processor 4110 (8 Core 2.1 GHz)
 - **Memory:** 192 GB
@@ -89,7 +89,7 @@ Customer Data Center
 - Others on request
 - F5 Loadbalancer
 - HAProxy 
-- 10/25/40/50GbE Networking
+- 10/25/40/50/100GbE Networking
 
 **A customer must adhere to certain guidelines when procuring or re-purposing existing hardware.  A Hummingbird cluster made from non-ideal, or inconsistent hardware will lead to a poor user experience.**
 
