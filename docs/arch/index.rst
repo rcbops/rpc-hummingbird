@@ -60,7 +60,7 @@ Rackspace Data Center
 
 **Supermicro JBOD**
 
-- **Model:** - E16 or E26
+- **Model:** E16 or E26
 - **Drives:** 45x SATA Drives
 
 **Dell R740XL-XL**
