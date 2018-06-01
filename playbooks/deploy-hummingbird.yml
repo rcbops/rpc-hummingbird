@@ -30,12 +30,12 @@
       delegate_facts: True
       with_items: "{{ groups['all'] }}"
 
-# This will create a simple Hummingbird deployment on an AIO using the localhost as admin and 3 lxc containers node01, node02 and node03
 - hosts: hummingbird_admin
   become: yes
   roles:
-    - { role: common, tags: ['common'] }
+    - { role: common, binary_only: 'yes', tags: ['common'] }
 
+# This will create a simple Hummingbird deployment on an AIO using the localhost as admin and 3 lxc containers node01, node02 and node03
 - hosts: hummingbird
   become: yes
   roles:
@@ -47,9 +47,10 @@
     - { role: container-server, tags: ['container-server'] }
     - { role: object-server, tags: ['object-server'] }
 
-
-
+- hosts: andrewd
+  become: yes
+  roles:
+    - { role: andrewd, tags: ['andrewd'] }
 
 # Setup logging to centralized rsyslog server
 #- include: hummingbird-setup-logging.yml
-
