@@ -1,8 +1,8 @@
 ---
 force_containers_destroy: True
 force_containers_data_destroy: False
-ansible_addr_prefix: "10.1.1"
-storage_addr_prefix: "10.2.1"
+ansible_addr_prefix: "172.29.236"
+storage_addr_prefix: "172.29.244"
 container_name: "{{ inventory_hostname }}"
 physical_host: localhost
 properties:
@@ -28,9 +28,9 @@ lxc_container_wait_params:
   timeout: 60
 
 # LXC Settings
-lxc_net_address: 10.100.100.1
+lxc_net_address: 10.255.255.1
 lxc_net_netmask: 255.255.255.0
-lxc_net_dhcp_range: 10.100.100.2,10.100.100.99
+lxc_net_dhcp_range: 10.255.255.2,10.255.255.253
 lxc_net_bridge: lxcbr0
 lxc_kernel_options:
   - { key: 'fs.inotify.max_user_instances', value: 1024 }
