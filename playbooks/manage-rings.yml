@@ -1,0 +1,2 @@
+---
+- include: /etc/ansible/roles/hansible/rings.yml
