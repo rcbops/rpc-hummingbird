@@ -11,7 +11,7 @@ ansible_become: True
 ansible_user: root
 bridges:
   - name: "br-mgmt"
-    ip_addr: "{{ ansible_addr_prefix }}.1"
+    ip_addr: "{{ ansible_addr_prefix }}.100"
 
 
 ## LXC container default bind mounts
