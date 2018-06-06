@@ -19,9 +19,9 @@ localhost	ansible_connection=local
 localhost
 
 [hummingbird]
-node01          service_ip=10.1.1.31
-node02          service_ip=10.1.1.32
-node03          service_ip=10.1.1.33
+node01          service_ip=172.29.236.31
+node02          service_ip=172.29.236.32
+node03          service_ip=172.29.236.33
 
 [andrewd]
 
