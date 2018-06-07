@@ -4,9 +4,6 @@ node01
 node02
 node03
 
-[lxc_hosts]
-localhost       ansible_connection=local
-
 [hosts]
 localhost	ansible_connection=local
 
@@ -15,15 +12,15 @@ node01
 node02
 node03
 
-[hummingbird-admin]
-localhost	ansible_connection=local
+[hummingbird_admin]
+localhost
 
 [hummingbird]
 node01          service_ip=172.29.236.31
 node02          service_ip=172.29.236.32
 node03          service_ip=172.29.236.33
 
-[hummingbird-andrewd]
+[andrewd]
 
 [rsyslog_all]
 
