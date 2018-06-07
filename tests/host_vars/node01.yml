@@ -1,3 +1,4 @@
+---
 ansible_host: "{{ ansible_addr_prefix }}.31"
 container_networks:
   management_address:

@@ -20,9 +20,12 @@ echo "+-------------------- START ENV VARS --------------------+"
 env
 echo "+-------------------- END ENV VARS --------------------+"
 
-export RE_JOB_SCENARIO=${RE_JOB_SCENARIO:-"functional"}
+export RE_JOB_SCENARIO=${RE_JOB_SCENARIO:-"rpco_pike"}
 export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/etc/ansible/roles/rpc-maas}
 export TEST_RPC_MAAS=${TEST_RPC_MAAS:-True}
+export RPCO_DIR=${RPCO_DIR:-/opt/rpc-openstack}
+export HB_BOOTSTRAP_OPTS=${HB_BOOTSTRAP_OPTS:-""}
+export DATA_DISK_MIN_SIZE_GB=${DATA_DISK_MIN_SIZE_GB:-50}
 
 # Install python2 for Ubuntu 16.04 and CentOS 7
 if which apt-get; then
@@ -38,31 +41,111 @@ fi
 # Install bindep and tox with pip.
 sudo pip install bindep tox
 
-if [ "${RE_JOB_SCENARIO}" = "functional" ]; then
-  export CLONE_DIR="$(pwd)"
-  export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory"
-  export ANSIBLE_OVERRIDES="${CLONE_DIR}/tests/test-vars.yml"
-  export ANSIBLE_BINARY="${ANSIBLE_BINARY:-/opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook}"
-  bash scripts/bootstrap-ansible.sh
-  bash scripts/set-static-rings.sh
-  # Clone the test repos
+
+function _configure_rpco {
+  export RPCO_VERSION="${RE_JOB_SCENARIO#rpco_}-rc"
+  export SECRETS_FILE="/etc/openstack_deploy/user_secrets.yml"
+  export OSA_DIR="/opt/openstack-ansible"
+  if [ "${RE_JOB_SCENARIO}" = "rpco_newton" ]; then
+    export OSA_DIR="${RPCO_DIR}/openstack-ansible"
+    export SECRETS_FILE="/etc/openstack_deploy/user_osa_secrets.yml"
+  fi
+  if [[ ! -d /opt/rpc-openstack ]]; then
+    git clone https://github.com/rcbops/rpc-openstack -b ${RPCO_VERSION} --recursive ${RPCO_DIR}
+  fi
+  pushd ${RPCO_DIR}
+    # Install required packages for the integrated build.
+    apt-get install -y parted iptables util-linux uuid-runtime
+    ## Dont use the specified Ceph inventory
+    unset ANSIBLE_INVENTORY
+    ## Set the RPC_ARTIFACT_MODE vars
+    export RPC_APT_ARTIFACT_ENABLED=no
+    export RPC_APT_ARTIFACT_MODE=loose
+    ## Use the openstack-ansible binary
+    export ANSIBLE_BINARY="openstack-ansible"
+    ## Bootstrap RPC-O's ansible
+    if [ "${RE_JOB_SCENARIO}" = "rpco_newton" ]; then
+      bash scripts/bootstrap-ansible.sh
+      cp ${CLONE_DIR}/tests/rpco_vars/user_rpc_hb_vars.yml /etc/openstack_deploy/user_rpc_hb_vars.yml
+      bash scripts/bootstrap-aio.sh
+    else
+      bash scripts/deploy.sh
+      pushd ${OSA_DIR}
+        export BOOTSTRAP_OPTS="@/etc/openstack_deploy/user_rpc_hb_vars.yml ${HB_BOOTSTRAP_OPTS}"
+        bash scripts/bootstrap-ansible.sh
+        cp ${CLONE_DIR}/tests/rpco_vars/user_rpc_hb_vars.yml /etc/openstack_deploy/user_rpc_hb_vars.yml
+        bash scripts/bootstrap-aio.sh
+      popd
+    fi
+    ## Build out the hosts, infrastructure and keystone only.
+    pushd ${OSA_DIR}/playbooks
+      ${ANSIBLE_BINARY} setup-hosts.yml
+      ${ANSIBLE_BINARY} setup-infrastructure.yml
+      ${ANSIBLE_BINARY} os-keystone-install.yml
+    popd
+  popd
+  ## Set the binary and inventory back to ceph's version.
+  export ANSIBLE_BINARY="/opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook"
+  export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory_rpco"
+  export HB_BOOTSTRAP_OPTS="-e @tests/test-vars-openstack.yml ${HB_BOOTSTRAP_OPTS}"
+}
+
+function _deploy_rpco {
+  unset ANSIBLE_INVENTORY
+  export ANSIBLE_BINARY="openstack-ansible"
+  pushd ${OSA_DIR}/playbooks
+    ${ANSIBLE_BINARY} os-glance-install.yml
+    ${ANSIBLE_BINARY} os-cinder-install.yml
+    ${ANSIBLE_BINARY} os-nova-install.yml
+    ${ANSIBLE_BINARY} os-neutron-install.yml
+    ${ANSIBLE_BINARY} os-tempest-install.yml
+  popd
+}
+
+function _get_data_disk {
+  # Get minimum disk size
+  DATA_DISK_MIN_SIZE="$((1024**3 * ${DATA_DISK_MIN_SIZE_GB} ))"
+
+  # Determine the largest secondary disk device that meets the minimum size
+  DATA_DISK_DEVICE=$(lsblk -brndo NAME,TYPE,RO,SIZE | awk '/d[b-z]+ disk 0/{ if ($4>m && $4>='$DATA_DISK_MIN_SIZE'){m=$4; d=$1}}; END{print d}')
+
+  # Only set the secondary disk device option if there is one
+  if [ -n "${DATA_DISK_DEVICE}" ]; then
+    export HB_BOOTSTRAP_OPTS="-e bootstrap_host_data_disk_device=${DATA_DISK_DEVICE} ${HB_BOOTSTRAP_OPTS}"
+  fi
+}
+
+export CLONE_DIR="$(pwd)"
+export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory"
+export ANSIBLE_OVERRIDES="${CLONE_DIR}/tests/test-vars.yml"
+export ANSIBLE_BINARY="${ANSIBLE_BINARY:-/opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook}"
+bash scripts/bootstrap-ansible.sh
+bash scripts/set-static-rings.sh
+if [ "${RE_JOB_SCENARIO}" != "rpco_newton" ]; then
+  _get_data_disk
+fi
+# Clone the test repos when not integrating with RPC-O
+# RPC-O has existing lxc roles that will conflict
+if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
+  _configure_rpco
+else
+# Clone the test repos
   pushd playbooks
     ${ANSIBLE_BINARY} git-clone-repos.yml \
-    	-i ${CLONE_DIR}/tests/inventory \
+        -i ${CLONE_DIR}/tests/inventory \
         -e role_file=../ansible-role-test-requirements.yml
   popd
+fi
 
-  ${ANSIBLE_BINARY} -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
-  # Use the rpc-maas deploy to test MaaS
-  if [ "${TEST_RPC_MAAS}" != "False" ]; then
-    pushd ${RPC_MAAS_DIR}
-      export RE_JOB_SCENARIO="hummingbird"
-      ## This is needed for the maas job to be able to update the apt cache
-      ## When the influxdb repo is present.
-      apt-get install -y apt-transport-https
-      bash tests/test-ansible-functional.sh
-    popd
-  fi
-else
-  echo "Implement tox bits if necessary"
+${ANSIBLE_BINARY} -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
+
+if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
+  _deploy_rpco
+fi
+# Use the rpc-maas deploy to test MaaS
+if [ "${TEST_RPC_MAAS}" != "False" ]; then
+  pushd ${RPC_MAAS_DIR}
+    export RE_JOB_SCENARIO="hummingbird"
+    bash tests/test-ansible-functional.sh
+  popd
 fi
