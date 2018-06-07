@@ -12,6 +12,7 @@ ansible_user: root
 bridges:
   - name: "br-mgmt"
     ip_addr: "{{ ansible_addr_prefix }}.100"
+    netmask: "255.255.252.0"
 
 
 ## LXC container default bind mounts
