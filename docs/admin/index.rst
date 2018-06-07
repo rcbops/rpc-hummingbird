@@ -11,7 +11,6 @@ Andrewd will initially populate "dispersion objects" and containers into the clu
 .. toctree::
    :maxdepth: 2
 
-   integration.md
    rings.md
    monitoring.md
    drivestatus.md
