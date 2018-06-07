@@ -1,6 +1,7 @@
 ---
 
 - include: setup-containers.yml
+- include: build-containers.yml
 
 - include: setup-hummingbird-disks.yml
 

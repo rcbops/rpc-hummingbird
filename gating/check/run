@@ -137,7 +137,7 @@ else
   popd
 fi
 
-${ANSIBLE_BINARY} -i tests/inventory tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
+${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
 
 if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
   _deploy_rpco
