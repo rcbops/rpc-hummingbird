@@ -41,10 +41,10 @@
         login_user: "{{ keystone_admin_user_name }}"
         login_password: "{{ keystone_auth_admin_password }}"
         login_project_name: "{{ keystone_admin_tenant_name }}"
-        user_name: "{{ authroken_username }}"
+        user_name: "{{ authtoken_username }}"
         tenant_name: "{{ hbird_keystone_admin_tenant }}"
         role_name: "{{ hbird_keystone_role_name | default('service') }}"
-        password: "{{ authroken_password }}"
+        password: "{{ authtoken_password }}"
         insecure: "{{ keystone_service_adminuri_insecure }}"
       delegate_to: 127.0.0.1
       run_once: true
@@ -57,7 +57,7 @@
     - name: Ensure hbird user to admin role
       keystone:
         command: "ensure_user_role"
-        endpoint: "{{ keystone_service_adminurl }}/v3"
+        endpoint: "{{ auth_url }}/v3"
         login_user: "{{ keystone_admin_user_name }}"
         login_password: "{{ keystone_auth_admin_password }}"
         login_project_name: "{{ keystone_admin_tenant_name }}"
@@ -72,10 +72,11 @@
       until: add_admin_role|success
       retries: 5
       delay: 10
+      #no_log: True
     - name: Ensure hbird endpoint
       keystone:
         command: "ensure_endpoint"
-        endpoint: "{{ keystone_service_adminurl }}/v3"
+        endpoint: "{{ auth_url }}/v3"
         login_user: "{{ keystone_admin_user_name }}"
         login_password: "{{ keystone_auth_admin_password }}"
         login_project_name: "{{ keystone_admin_tenant_name }}"
@@ -97,4 +98,4 @@
       until: add_service|success
       retries: 5
       delay: 10
-      no_log: True
+      #no_log: True
