@@ -142,10 +142,11 @@ else
   popd
 fi
 
-${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml
-
 if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
+  ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml -e @tests/test-vars-rpco.yml
   _deploy_rpco
+else
+  ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml -e @tests/test-vars-norpco.yml
 fi
 # Use the rpc-maas deploy to test MaaS
 if [ "${TEST_RPC_MAAS}" != "False" ]; then

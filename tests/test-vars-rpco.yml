@@ -1,0 +1,23 @@
+---
+hbird_keystone: true
+use_temp_auth: false
+auth_uri: http://172.29.238.114:5000
+auth_url: http://172.29.238.114:35357
+authtoken_username: swift
+authtoken_password: password
+
+service_region: RegionOne
+keystone_admin_user_name: admin
+keystone_auth_admin_password: "SuperSecretePassword"
+keystone_admin_tenant_name: admin
+keystone_service_adminuri_insecure: false
+
+hbird_keystone_service_name: "Hummingbird"
+hbird_keystone_service_type: "object-store"
+hbird_keystone_service_description: "Hummingbird Object Store Service"
+hbird_keystone_service_region: "{{ service_region }}"
+hbird_keystone_admin_tenant: service
+
+hbird_service_publicurl: http://172.29.236.31:8080/v1/AUTH_%(tenant_id)s
+hbird_service_internalurl: http://172.29.236.31:8080/v1/AUTH_%(tenant_id)s
+hbird_service_adminurl: http://172.29.236.31:8080/v1/AUTH_%(tenant_id)s
