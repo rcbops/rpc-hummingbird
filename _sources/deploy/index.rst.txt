@@ -9,3 +9,4 @@ Hummingbird Deployment
 
    deployment.md
    integration.md
+   benchmarking.md
