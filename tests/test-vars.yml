@@ -13,7 +13,7 @@ bridges:
   - name: "br-mgmt"
     ip_addr: "{{ ansible_addr_prefix }}.100"
     netmask: "255.255.252.0"
-
+internal_lb_vip_address: 172.29.236.100
 
 ## LXC container default bind mounts
 lxc_container_default_bind_mounts:

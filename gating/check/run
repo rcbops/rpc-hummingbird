@@ -41,6 +41,13 @@ fi
 # Install bindep and tox with pip.
 sudo pip install bindep tox
 
+function _set_rpco_vars {
+  ## Copy over the keystone_auth_admin_password from OSA --> Ceph
+  if ! grep -q keystone_auth_admin_password ${CLONE_DIR}/tests/test-vars-openstack.yml; then
+    grep keystone_auth_admin_password ${SECRETS_FILE} >> ${CLONE_DIR}/tests/test-vars-openstack.yml
+  fi
+}
+
 
 function _configure_rpco {
   export RPCO_VERSION="${RE_JOB_SCENARIO#rpco_}-rc"
@@ -128,6 +135,7 @@ fi
 # RPC-O has existing lxc roles that will conflict
 if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
   _configure_rpco
+  _set_rpco_vars
 else
 # Clone the test repos
   pushd playbooks
@@ -138,7 +146,7 @@ else
 fi
 
 if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
-  ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml -e @tests/test-vars-rpco.yml
+  ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml ${HB_BOOTSTRAP_OPTS}
   _deploy_rpco
 else
   ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml -e @tests/test-vars-norpco.yml
