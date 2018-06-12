@@ -1,8 +1,8 @@
 ---
 hbird_keystone: true
 use_temp_auth: false
-auth_uri: http://172.29.238.114:5000
-auth_url: http://172.29.238.114:35357
+auth_uri: "http://{{ internal_lb_vip_address }}:5000"
+auth_url: "http://{{ internal_lb_vip_address }}:35357"
 authtoken_username: swift
 authtoken_password: password
 
