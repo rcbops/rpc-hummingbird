@@ -30,27 +30,27 @@
       delegate_facts: True
       with_items: "{{ groups['all'] }}"
 
-- hosts: hummingbird_admin
+- hosts: hummingbird-admin
   become: yes
   roles:
-    - { role: common, binary_only: 'yes', tags: ['common'] }
+    - { role: hummingbird-common, binary_only: 'yes', tags: ['common'] }
 
 # This will create a simple Hummingbird deployment on an AIO using the localhost as admin and 3 lxc containers node01, node02 and node03
 - hosts: hummingbird
   become: yes
   roles:
-    - { role: common, tags: ['common'] }
-    - { role: storage, tags: ['storage'] }
-    - { role: ring, tags: ['ring'] }
-    - { role: proxy-server, tags: ['proxy-server'] }
-    - { role: account-server, tags: ['account-server'] }
-    - { role: container-server, tags: ['container-server'] }
-    - { role: object-server, tags: ['object-server'] }
+    - { role: hummingbird-common, tags: ['common'] }
+    - { role: hummingbird-storage, tags: ['storage'] }
+    - { role: hummingbird-ring, tags: ['ring'] }
+    - { role: hummingbird-proxy-server, tags: ['proxy-server'] }
+    - { role: hummingbird-account-server, tags: ['account-server'] }
+    - { role: hummingbird-container-server, tags: ['container-server'] }
+    - { role: hummingbird-object-server, tags: ['object-server'] }
 
-- hosts: andrewd
+- hosts: hummingbird-andrewd
   become: yes
   roles:
-    - { role: andrewd, tags: ['andrewd'] }
+    - { role: hummingbird-andrewd, tags: ['andrewd'] }
 
 # Setup logging to centralized rsyslog server
 #- include: hummingbird-setup-logging.yml

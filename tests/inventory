@@ -12,7 +12,7 @@ node01
 node02
 node03
 
-[hummingbird_admin]
+[hummingbird-admin]
 localhost
 
 [hummingbird]
@@ -20,7 +20,7 @@ node01          service_ip=10.1.1.101
 node02          service_ip=10.1.1.102
 node03          service_ip=10.1.1.103
 
-[andrewd]
+[hummingbird-andrewd]
 
 [rsyslog_all]
 
