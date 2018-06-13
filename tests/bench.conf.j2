@@ -1,7 +1,14 @@
 [bench]
+{% if hbird_keystone %}
+auth = http://{{ internal_lb_vip_address }}:5000/v3
+tenant = test
+user = tester
+password = testing
+{% else %}
 auth = http://172.29.236.32:8080/auth/v1.0
 user = test:tester
 key = testing
+{% endif %}
 concurrency = 10
 object_size = 131072
 num_objects = 100
