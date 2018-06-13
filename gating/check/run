@@ -42,7 +42,7 @@ fi
 sudo pip install bindep tox
 
 function _set_rpco_vars {
-  ## Copy over the keystone_auth_admin_password from OSA --> Ceph
+  ## Copy over the keystone_auth_admin_password from OSA --> hummingbird
   if ! grep -q keystone_auth_admin_password ${CLONE_DIR}/tests/test-vars-openstack.yml; then
     grep keystone_auth_admin_password ${SECRETS_FILE} >> ${CLONE_DIR}/tests/test-vars-openstack.yml
   fi
@@ -63,7 +63,7 @@ function _configure_rpco {
   pushd ${RPCO_DIR}
     # Install required packages for the integrated build.
     apt-get install -y parted iptables util-linux uuid-runtime
-    ## Dont use the specified Ceph inventory
+    ## Dont use the specified hummingbird inventory
     unset ANSIBLE_INVENTORY
     ## Set the RPC_ARTIFACT_MODE vars
     export RPC_APT_ARTIFACT_ENABLED=no
@@ -91,7 +91,7 @@ function _configure_rpco {
       ${ANSIBLE_BINARY} os-keystone-install.yml
     popd
   popd
-  ## Set the binary and inventory back to ceph's version.
+  ## Set the binary and inventory back to hummingbird's version.
   export ANSIBLE_BINARY="/opt/rpc-hummingbird-ansible-runtime/bin/ansible-playbook"
   export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory_rpco"
   export HB_BOOTSTRAP_OPTS="-e @tests/test-vars-openstack.yml ${HB_BOOTSTRAP_OPTS}"
