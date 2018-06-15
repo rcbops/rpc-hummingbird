@@ -2,10 +2,10 @@
   src: https://github.com/troubling/hansible  
   scm: git
   version: master
-- name: ../plugins
+- name: ../hummingbird_plugins
   src: https://git.openstack.org/openstack/openstack-ansible-plugins
   scm: git
-  version: stable/pike
+  version: 17.0.0.0b3
 - name: rsyslog_client
   src: https://git.openstack.org/openstack/openstack-ansible-rsyslog_client
   scm: git
