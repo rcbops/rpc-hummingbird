@@ -12,6 +12,9 @@ node01
 node02
 node03
 
+[admin]
+localhost	ansible_connection=local
+
 [hummingbird_admin]
 localhost
 
