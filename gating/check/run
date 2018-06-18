@@ -160,6 +160,8 @@ fi
 if [ "${TEST_RPC_MAAS}" != "False" ]; then
   pushd ${RPC_MAAS_DIR}
     export RE_JOB_SCENARIO="hummingbird"
+    ## When the influxdb repo is present.	
+    apt-get install -y apt-transport-https	
     bash tests/test-ansible-functional.sh
   popd
 fi
