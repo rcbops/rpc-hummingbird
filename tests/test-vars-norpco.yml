@@ -1,0 +1,3 @@
+---
+hbird_keystone: false
+use_temp_auth: true
