@@ -120,7 +120,6 @@ function _get_data_disk {
     export HB_BOOTSTRAP_OPTS="-e bootstrap_host_data_disk_device=${DATA_DISK_DEVICE} ${HB_BOOTSTRAP_OPTS}"
   fi
 }
-j
 
 virtualenv --python python3 .rpc_component_venv
 
