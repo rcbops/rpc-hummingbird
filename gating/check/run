@@ -21,7 +21,7 @@ env
 echo "+-------------------- END ENV VARS --------------------+"
 
 export RE_JOB_SCENARIO=${RE_JOB_SCENARIO:-"rpco_pike"}
-export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/etc/ansible/roles/rpc-maas}
+export RPC_MAAS_DIR=${RPC_MAAS_DIR:-/opt/rpc-maas}
 export TEST_RPC_MAAS=${TEST_RPC_MAAS:-True}
 export RPCO_DIR=${RPCO_DIR:-/opt/rpc-openstack}
 export HB_BOOTSTRAP_OPTS=${HB_BOOTSTRAP_OPTS:-""}
@@ -124,7 +124,7 @@ function _get_data_disk {
 virtualenv --python python3 .rpc_component_venv
 
 .rpc_component_venv/bin/pip install "git+https://github.com/rcbops/rpc_component@85f152ece9eee3c9cd7d68bd2ecc5982e17400ae#egg=rpc_component"
-.rpc_component_venv/bin/component dependency download-requirements --download-dir /etc/ansible/roles/
+.rpc_component_venv/bin/component dependency download-requirements --download-dir /opt
 
 export CLONE_DIR="$(pwd)"
 export ANSIBLE_INVENTORY="${CLONE_DIR}/tests/inventory"
@@ -146,12 +146,14 @@ else
     ${ANSIBLE_BINARY} git-clone-repos.yml \
         -i ${CLONE_DIR}/tests/inventory \
         -e role_file=../ansible-role-test-requirements.yml
+    ln -s /etc/ansible/roles/rpc-maas/tests/common /opt/rpc-maas/tests/common
   popd
 fi
 
 if [[ "${RE_JOB_SCENARIO}" =~ ^rpco_ ]]; then
   ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml ${HB_BOOTSTRAP_OPTS}
-  _deploy_rpco
+  # I'm leaving this here in case for some reason you want to install the whole stack.
+  # _deploy_rpco
 else
   ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @tests/test-vars.yml -e @tests/test-vars-norpco.yml
 fi
