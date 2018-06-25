@@ -2,8 +2,8 @@
 - hosts: localhost
   tasks:
     - name:
-      copy:
-        src: bench.conf
+      template:
+        src: bench.conf.j2
         dest: /etc/hummingbird/bench.conf
 
     - name: Run hummingbird bench

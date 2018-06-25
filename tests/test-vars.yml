@@ -1,8 +1,8 @@
 ---
 force_containers_destroy: True
 force_containers_data_destroy: False
-ansible_addr_prefix: "10.1.1"
-storage_addr_prefix: "10.2.1"
+ansible_addr_prefix: "172.29.236"
+storage_addr_prefix: "172.29.244"
 container_name: "{{ inventory_hostname }}"
 physical_host: localhost
 properties:
@@ -11,8 +11,9 @@ ansible_become: True
 ansible_user: root
 bridges:
   - name: "br-mgmt"
-    ip_addr: "{{ ansible_addr_prefix }}.1"
-
+    ip_addr: "{{ ansible_addr_prefix }}.100"
+    netmask: "255.255.252.0"
+internal_lb_vip_address: 172.29.236.100
 
 ## LXC container default bind mounts
 lxc_container_default_bind_mounts:
@@ -28,9 +29,11 @@ lxc_container_wait_params:
   timeout: 60
 
 # LXC Settings
-lxc_net_address: 10.100.100.1
+lxc_net_address: 10.255.255.1
 lxc_net_netmask: 255.255.255.0
-lxc_net_dhcp_range: 10.100.100.2,10.100.100.99
+lxc_net_dhcp_range: 10.255.255.2,10.255.255.253
+lxc_image_cache_server: rpc-repo.rackspace.com
+lxc_container_backing_store: dir
 lxc_net_bridge: lxcbr0
 lxc_kernel_options:
   - { key: 'fs.inotify.max_user_instances', value: 1024 }
@@ -59,7 +62,6 @@ rpc_hummingbird_test_drive_size: 5G
 proxy_port: 8080
 hash_prefix: changeme
 hash_suffix: changeme
-use_temp_auth: true
 filebeat_logstash_hosts:
   - "localhost"
 filebeat_logging_paths:

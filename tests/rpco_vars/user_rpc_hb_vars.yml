@@ -1,0 +1,13 @@
+---
+# Ensure only the required services are built
+openstack_confd_entries:
+  - name: cinder.yml.aio
+  - name: glance.yml.aio
+  - name: keystone.yml.aio
+  - name: neutron.yml.aio
+  - name: nova.yml.aio
+bootstrap_host_loopback_swift: false
+
+glance_default_store: swift
+tempest_run: True
+tempest_service_available_swift: True
