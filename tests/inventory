@@ -28,4 +28,3 @@ node03          service_ip=172.29.236.33
 [rsyslog_all]
 
 [benchmark_hosts]
-
