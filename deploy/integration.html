@@ -113,6 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#load-balancing">Load Balancing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#keystone">Keystone</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#glance">Glance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpc-maas">RPC MaaS</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
@@ -270,6 +271,13 @@ make calls to Keystone to authenticate requests.</p>
 <span class="n">user</span> <span class="o">=</span> <span class="n">service</span><span class="p">:</span><span class="n">glance</span><span class="o">-</span><span class="n">swift</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="rpc-maas">
+<h2>RPC MaaS<a class="headerlink" href="#rpc-maas" title="Permalink to this headline">#</a></h2>
+<p>The MaaS deploy will need to have the a utility group in the inventory
+to get openrc creds from.</p>
+<p>For the AIO, we generate openrc on the hummingbird admin boxes and set
+that as the utility group.</p>
 </div>
 </div>
 
