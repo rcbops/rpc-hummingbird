@@ -33,3 +33,6 @@ filebeat_logstash_hosts:
 filebeat_logging_paths:
   - paths:
     - '/var/log/hummingbird/*.log'
+
+#MaaS
+maas_hummingbird_transactioncheck_enabled: true

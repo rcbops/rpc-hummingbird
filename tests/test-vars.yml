@@ -84,3 +84,5 @@ maas_rpc_legacy_hummingbird: true
 #maas_hummingbird_accesscheck_password: accesspassword
 #maas_external_hostname: 172.29.236.31
 #external_lb_vip_address: 172.29.236.100
+# Enable the transaction check
+maas_hummingbird_transactioncheck_enabled: true
