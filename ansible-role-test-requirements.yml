@@ -17,7 +17,7 @@
 - name: rpc-maas/tests/common
   src: https://git.openstack.org/openstack/openstack-ansible-tests
   scm: git
-  version: master
+  version: b146d649e675d748a58af238c7b37138b8194f1f
 - name: rsyslog_server
   src: https://git.openstack.org/openstack/openstack-ansible-rsyslog_server
   scm: git
