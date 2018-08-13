@@ -20,7 +20,7 @@ node01          service_ip=172.29.236.31
 node02          service_ip=172.29.236.32
 node03          service_ip=172.29.236.33
 
-[andrewd]
+[hummingbird-andrewd]
 
 [rsyslog_all]
 
