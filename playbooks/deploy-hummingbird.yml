@@ -33,11 +33,11 @@
 - hosts: hummingbird-admin
   become: yes
   roles:
-    - { role: hummingbird-common, binary_only: 'yes', tags: ['common'] }
+    - { role: hummingbird-common, binary_only: 'yes', tags: ['common', 'admin'] }
 
-# This will create a simple Hummingbird deployment on an AIO using the localhost as admin and 3 lxc containers node01, node02 and node03
 - hosts: hummingbird
   become: yes
+  serial: 1
   roles:
     - { role: hummingbird-common, tags: ['common'] }
     - { role: hummingbird-storage, tags: ['storage'] }
