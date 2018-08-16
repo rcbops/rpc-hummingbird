@@ -147,6 +147,9 @@ ${ANSIBLE_BINARY} -i ${ANSIBLE_INVENTORY} tests/setup-hummingbird-test.yml -e @t
 # Use the rpc-maas deploy to test MaaS
 if [ "${TEST_RPC_MAAS}" != "False" ]; then
   pushd ${RPC_MAAS_DIR}
+    if [[ ! -d tests/common ]]; then
+      git clone https://github.com/openstack/openstack-ansible-tests -b stable/pike tests/common
+    fi
     export RE_JOB_SCENARIO="hummingbird"
     ## When the influxdb repo is present.
     apt-get install -y apt-transport-https
